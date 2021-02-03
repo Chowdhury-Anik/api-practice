@@ -8,10 +8,15 @@
 </head>
 
 <body>
-    <h1 id="activity"></h1>
-    <h3>Learn with fun it's free:
-        <button><a id="expolorLink" href="">Click Me</a></button>
-    </h3>
+    <h1 style="text-align:center" id="activity"></h1>
+    <div>
+
+        <h3 style="text-align:center;color:red;">Learn with fun it's free:
+            <button><a id="expolorLink" href="">Click Me</a></button>
+        </h3>
+        <h2 style="text-align:center">Now Playing With You</h2>
+        <h2 style="text-align:center;color:red;" id="latestUser">Latest Users</h2>
+    </div>
     <script>
         function doSomething() {
             fetch('http://www.boredapi.com/api/activity/')
@@ -23,6 +28,23 @@
         doSomething();
         setInterval(() => {
             doSomething();
+        }, 2000);
+
+        function latestPlayer() {
+            fetch('https://randomuser.me/api/')
+                .then(res => res.json())
+                .then(data => {
+                    const user = data.results[0];
+                    const name = user.name;
+                    const userName = `${name.title} ${name.first} ${name.last}`;
+
+                    document.getElementById("latestUser").innerText = userName;
+                })
+        }
+        latestPlayer();
+
+        setInterval(() => {
+            latestPlayer();
         }, 1500);
     </script>
 </body>
